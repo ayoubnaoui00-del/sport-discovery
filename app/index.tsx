@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
-import { View, Text, FlatList, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, Text, FlatList, ActivityIndicator, StyleSheet, ImageBackground } from 'react-native';
 import { useRouter } from 'expo-router';
 import useSportsStore from '../store/sportsStore';
 import SportCard from '../components/SportCard';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function HomeScreen() {
   const { sports, loading, error, loadSports, favorites, addFavorite, removeFavorite } = useSportsStore();
@@ -23,7 +24,7 @@ export default function HomeScreen() {
   if (loading) {
     return (
       <View style={styles.center}>
-        <ActivityIndicator size="large" color="#1A73E8" />
+        <ActivityIndicator size="large" color="#ff5e00" />
         <Text style={styles.loadingText}>Chargement...</Text>
       </View>
     );
@@ -38,16 +39,20 @@ export default function HomeScreen() {
   }
 
   return (
-    <View style={styles.container}>
+    <LinearGradient colors={['#090a09', '#ff7300' ]} style={styles.container}>
       <FlatList
         data={sports}
         keyExtractor={(item) => item.id}
         ListHeaderComponent={
-          <View style={styles.header}>
-            <Text style={styles.headerTitle}>Sport Discovery</Text>
-            <Text style={styles.headerSubtitle}>Découvrez les disciplines</Text>
-            <Text style={styles.headerDesc}>Explorez les activités sportives pour booster votre performance</Text>
-          </View>
+          <ImageBackground
+            source={{ uri: 'https://images.unsplash.com/photo-1529900748604-07564a03e7a6?w=800' }}
+          >
+            <View style={styles.headerOverlay}>
+              <Text style={styles.headerTitle}>Sport Discovery</Text>
+              <Text style={styles.headerSubtitle}>Découvrez les disciplines</Text>
+              <Text style={styles.headerDesc}>Explorez les activités sportives pour booster votre performance</Text>
+            </View>
+          </ImageBackground>
         }
         renderItem={({ item, index }) => (
           <SportCard
@@ -59,7 +64,7 @@ export default function HomeScreen() {
           />
         )}
       />
-    </View>
+    </LinearGradient>
   );
 }
 
@@ -69,24 +74,30 @@ const styles = StyleSheet.create({
   loadingText: { marginTop: 10, color: '#1A73E8', fontSize: 16 },
   errorText: { color: 'red', fontSize: 16 },
   header: {
-    backgroundColor: '#1A1A2E',
+    width: '100%',
+    height: 220,
+  },
+  headerOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.55)',
     padding: 24,
     paddingTop: 48,
+    justifyContent: 'flex-end',
   },
   headerTitle: {
-    fontSize: 22,
+    fontSize: 21,
     fontWeight: 'bold',
     color: '#1A73E8',
-    marginBottom: 8,
+    marginBottom: 6,
   },
   headerSubtitle: {
     fontSize: 26,
     fontWeight: 'bold',
-    color: '#fff',
-    marginBottom: 8,
+    color: '#ff7504',
+    marginBottom: 6,
   },
   headerDesc: {
     fontSize: 14,
-    color: '#aaa',
+    color: '#ddd',
   },
 });
