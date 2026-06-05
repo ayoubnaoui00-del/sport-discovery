@@ -55,7 +55,7 @@ export default function HomeScreen() {
             index={index}
             isFavorite={favorites.includes(item.id)}
             onToggleFavorite={toggleFavorite}
-            onPress={() => router.push(`/detail/${item.id}` as any)}
+            onPress={() => router.push(`/details/${item.id}` as any)}
           />
         )}
       />
