@@ -25,7 +25,7 @@ export default function SportCard({ item, index, isFavorite, onToggleFavorite, o
   useEffect(() => {
     opacity.value = withDelay(index * 150, withTiming(1, { duration: 500 }));
     translateY.value = withDelay(index * 150, withTiming(0, { duration: 500 }));
-  }, [index]);
+  }, [index, opacity, translateY]);
 
   const animatedStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,
